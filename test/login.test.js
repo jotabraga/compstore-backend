@@ -11,7 +11,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
   const result = await connectionDB.query(
-      `SELECT sessions.token 
+    `SELECT sessions.token 
       FROM sessions JOIN users 
       ON users.id = sessions."userId" 
       WHERE email = 'loginjest@jest.br'`
@@ -54,22 +54,19 @@ describe("POST /api/login", () => {
   });
 
   it("returns status 400 for password length greater than 100", async () => {
-    const result = await supertest(app)
-      .post("/api/login")
-      .send({
-        email: "newjest@jest.br",
-        password: "123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678",
-      });
+    const result = await supertest(app).post("/api/login").send({
+      email: "newjest@jest.br",
+      password:
+        "123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678",
+    });
     expect(result.status).toEqual(400);
   });
 
   it("returns status 400 for password length less than 8", async () => {
-    const result = await supertest(app)
-      .post("/api/login")
-      .send({
-        email: "newjest@jest.br",
-        password: "1234567",
-      });
+    const result = await supertest(app).post("/api/login").send({
+      email: "newjest@jest.br",
+      password: "1234567",
+    });
     expect(result.status).toEqual(400);
   });
 

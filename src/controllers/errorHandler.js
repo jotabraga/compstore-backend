@@ -1,6 +1,5 @@
 export default function errorHandler(error, res) {
-  console.log(error)
-  console.log(error?.details[0].type)
+  console.log(error?.details[0].type);
   switch (error?.details[0].type) {
     case "any.required":
     case "string.empty":
@@ -13,7 +12,7 @@ export default function errorHandler(error, res) {
     case "date.base":
     case "DateTimeParseError":
     case "string.email":
-    case 'any.custom':
+    case "any.custom":
       res.status(400).send(error.details[0].message);
       break;
     case "string.guid":
