@@ -45,7 +45,7 @@ describe("POST /api/register", () => {
     expect(result.status).toEqual(400);
   });
 
-  it("returns status 400 for small name", async () => {
+  it("returns status 400 for name length less than 3", async () => {
     const result = await supertest(app)
       .post("/api/register")
       .send({
@@ -137,6 +137,30 @@ describe("POST /api/register", () => {
         email: "newjest@jest.br",
         cpf: "19144600062",
         password: "",
+      });
+    expect(result.status).toEqual(400);
+  });
+
+  it("returns status 400 for password length greater than 100", async () => {
+    const result = await supertest(app)
+      .post("/api/register")
+      .send({
+        name: "NewJest",
+        email: "newjest@jest.br",
+        cpf: "19144600062",
+        password: "123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678",
+      });
+    expect(result.status).toEqual(400);
+  });
+
+  it("returns status 400 for password length less than 8", async () => {
+    const result = await supertest(app)
+      .post("/api/register")
+      .send({
+        name: "NewJest",
+        email: "newjest@jest.br",
+        cpf: "19144600062",
+        password: "1234567",
       });
     expect(result.status).toEqual(400);
   });
