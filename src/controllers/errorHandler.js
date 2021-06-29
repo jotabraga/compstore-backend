@@ -1,9 +1,10 @@
 export default function errorHandler(error, res) {
-  console.log(error.details[0].type)
-  switch (error.details[0].type) {
+  console.log(error?.details[0].type)
+  switch (error?.details[0].type) {
     case "any.required":
     case "string.empty":
     case "string.min":
+    case "string.max":
     case "string.length":
     case "string.base":
     case "number.min":

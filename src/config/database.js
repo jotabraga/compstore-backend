@@ -13,7 +13,7 @@ const { DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT } = process.env;
 const { Pool } = pg;
 
 export const connectionDB = new Pool(
-  process.env?.NODE_ENV === "development" 
+  process.env?.NODE_ENV === "development" || process.env?.NODE_ENV === "test" 
     ?
       {
         user: DB_USERNAME,
