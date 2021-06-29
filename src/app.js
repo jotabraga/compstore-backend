@@ -1,8 +1,7 @@
-import customExpress from "./config/customExpress";
+import customExpress from "./config/customExpress.js";
 import routes from "./routes/routes.js";
 
 const app = customExpress();
-routes(app);
-
+app.use("/api", routes);
 
 export default app;
