@@ -1,4 +1,5 @@
 export default function errorHandler(error, res) {
+  console.log(error)
   console.log(error?.details[0].type)
   switch (error?.details[0].type) {
     case "any.required":
