@@ -5,11 +5,15 @@ export default async function register(req, res) {
   try {
 
     const { token, id } = req.body;
+
+    if (!token) return res.sendStatus(409);
+
     const result = await connectionDB.query(
       `SELECT * FROM products 
       WHERE id = $1`,
       [id]
     );
+    
     if (result.rowCount === 0) return res.sendStatus(409);
 
     const product = result.rows[0];
