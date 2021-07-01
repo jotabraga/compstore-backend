@@ -3,5 +3,6 @@ CREATE TABLE "cart" (
   "description" TEXT NOT NULL,
   "image" TEXT NOT NULL,
   "price" INTEGER NOT NULL,
-  "categoryId" INTEGER NOT NULL
+  "categoryId" INTEGER NOT NULL,
+  "token" TEXT NOT NULL
 );
