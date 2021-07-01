@@ -1,7 +1,7 @@
 import { connectionDB } from "../config/database.js";
 import errorHandler from "./errorHandler.js";
 
-export default async function register(req, res) {
+export default async function editCart(req, res) {
   try {
 
     const { newAmount, token, productId } = req.body;

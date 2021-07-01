@@ -1,7 +1,7 @@
 import { connectionDB } from "../config/database.js";
 import errorHandler from "./errorHandler.js";
 
-export default async function register(req, res) {
+export default async function deleteCart(req, res) {
   try {
 
     const { productId, token } = req.body;
