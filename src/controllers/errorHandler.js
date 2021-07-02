@@ -1,6 +1,12 @@
 export default function errorHandler(error, res) {
-  console.log(error)
-  console.log(error?.details[0].type);
+  if (error.message === "invalid signature" || error.message === "jwt malformed") {
+    error = { details: [{type: error.message, message: error.message}]};
+    console.log(error.message)
+  }
+  else if(error?.details)
+    console.log(error.details[0].type);
+  else
+    error = { details: [{type: error, message: ""}]};
   switch (error?.details[0].type) {
     case "any.required":
     case "string.empty":
@@ -15,8 +21,10 @@ export default function errorHandler(error, res) {
     case "string.email":
     case "any.custom":
       res.status(400).send(error.details[0].message);
-      break;
+      break; 
+    case "invalid signature":
     case "string.guid":
+    case "jwt malformed":
     case "Unauthorized":
       res.status(401).send(error.details[0].message);
       break;

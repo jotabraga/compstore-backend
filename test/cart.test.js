@@ -30,4 +30,4 @@ describe("POST /api/cart", () => {
         .send({ email: "loginjest@jest.br", password: "" });
       expect(result.status).toEqual(400);
     });
-  
+  });
