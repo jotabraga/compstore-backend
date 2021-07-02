@@ -8,7 +8,7 @@ import errorHandler from "./errorHandler.js";
 export default async function login(req, res) {
   try {
     await Login.validateAsync(req.body);
-
+    
     const { email, password } = req.body;
     const auth = await connectionDB.query(
       `SELECT hash, id, name FROM users 
@@ -25,7 +25,6 @@ export default async function login(req, res) {
         WHERE users.email = $1`,
         [email]
       );
-
       if (result?.rowCount === 0) {
         const secret = process.env.JWT_SECRET;
         const configs = { expiresIn: 60 * 60 * 24 * 30 };
@@ -35,9 +34,8 @@ export default async function login(req, res) {
           VALUES ($1,$2)`,
           [userId, token]
         );
-
         result = await connectionDB.query(
-          `SELECT sessions.token, users.email 
+          `SELECT sessions.token, users.email, users.id 
           FROM sessions JOIN users ON sessions."userId" = users.id 
           WHERE users.email = $1`,
           [email]
@@ -45,7 +43,7 @@ export default async function login(req, res) {
       }
       res
         .status(200)
-        .send({ token: result.rows[0].token, name: auth.rows[0].name });
+        .send({ token: result.rows[0].token, name: auth.rows[0].name, id: auth.rows[0].id });
     } else {
       res.sendStatus(401);
     }

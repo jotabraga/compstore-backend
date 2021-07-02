@@ -3,10 +3,14 @@ import errorHandler from "./errorHandler.js";
 
 export default async function products(req, res) {
   try {
-    
-    const result = await connectionDB.query(`SELECT * FROM products`);
-
-    if (result.rowCount === 0) return res.sendStatus(409);
+    let result;
+    if (req.query.category) {
+      const categoryId = req.query.category;
+      const category = await connectionDB.query(`SELECT * FROM categories WHERE id = $1`, [categoryId]);
+      if (category.rowCount === 0) return res.sendStatus(404);
+      result = await connectionDB.query(`SELECT products.* FROM products JOIN categories ON categories.id = products."categoryId" WHERE categories.id = $1`, [categoryId]);
+    } else
+      result = await connectionDB.query(`SELECT * FROM products`);
 
     res.send(result.rows);
   } catch (e) {
