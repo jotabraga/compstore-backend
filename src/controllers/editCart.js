@@ -4,14 +4,17 @@ import errorHandler from "./errorHandler.js";
 export default async function editCart(req, res) {
   try {
 
-    const { newAmount, token, productId } = req.body;
-
-    if(!token) return res.sendStatus(409);
+    const token = req.headers["authorization"]?.replace("Bearer ", "");
+    const secret = process.env.JWT_SECRET;
+    const {userId} = jwt.verify(token, secret)
+    if (!userId) return res.sendStatus(409);
+    
+    const { newAmount, productId } = req.body;
 
     const result = await connectionDB.query(
       `UPDATE cart 
-      SET amount = $1 WHERE "productId" = $2 AND token = $3`,
-      [newAmount, productId, token]
+      SET amount = $1 WHERE "productId" = $2 AND "userId" = $3`,
+      [newAmount, productId, userId]
     );
 
     res.sendStatus(201);

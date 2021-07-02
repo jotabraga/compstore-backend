@@ -4,9 +4,12 @@ import errorHandler from "./errorHandler.js";
 export default async function createCart(req, res) {
   try {
 
-    const { token, id } = req.body;
-
-    if (!token) return res.sendStatus(409);
+    const token = req.headers["authorization"]?.replace("Bearer ", "");
+    const secret = process.env.JWT_SECRET;
+    const { userId } = jwt.verify(token, secret)
+    if (!userId) return res.sendStatus(409);
+    
+    const { id } = req.body;
 
     const result = await connectionDB.query(
       `SELECT * FROM products 

@@ -37,7 +37,7 @@ export default async function login(req, res) {
         );
 
         result = await connectionDB.query(
-          `SELECT sessions.token, users.email 
+          `SELECT sessions.token, users.email users.id 
           FROM sessions JOIN users ON sessions."userId" = users.id 
           WHERE users.email = $1`,
           [email]
@@ -45,7 +45,7 @@ export default async function login(req, res) {
       }
       res
         .status(200)
-        .send({ token: result.rows[0].token, name: auth.rows[0].name });
+        .send({ token: result.rows[0].token, name: auth.rows[0].name, id: auth.rows[0].id });
     } else {
       res.sendStatus(401);
     }
