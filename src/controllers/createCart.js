@@ -15,7 +15,7 @@ export default async function createCart(req, res) {
       [id]
     );
     
-    if (result.rowCount === 0) return res.sendStatus(409);
+    if (result.rowCount === 0) return res.sendStatus(404);
 
     const product = result.rows[0];
     const { description, image, price, categoryId } = product;
