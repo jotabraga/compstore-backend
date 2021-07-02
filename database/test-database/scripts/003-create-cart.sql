@@ -6,5 +6,5 @@ CREATE TABLE "cart" (
   "image" TEXT NOT NULL,
   "price" INTEGER NOT NULL,
   "categoryId" INTEGER NOT NULL,
-  "amount" INTEGER NOT NULL,
+  "amount" INTEGER NOT NULL
 );
