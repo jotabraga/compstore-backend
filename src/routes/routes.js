@@ -2,6 +2,7 @@ import express from "express";
 
 import register from "../controllers/register.js";
 import login from "../controllers/login.js";
+import logout from "../controllers/logout.js";
 import products from "../controllers/products.js";
 import categories from "../controllers/categories.js";
 import getCart from "../controllers/getCart.js";
@@ -14,6 +15,8 @@ const routes = express.Router();
 routes.post("/register", (req, res) => register(req, res));
 
 routes.post("/login", (req, res) => login(req, res));
+
+routes.delete("/logout", (req, res) => logout(req, res));
 
 routes.get("/products", (req, res) => products(req, res));
 
