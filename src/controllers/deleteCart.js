@@ -10,7 +10,7 @@ export default async function deleteCart(req, res) {
     const secret = process.env.JWT_SECRET;
     const {userId} = jwt.verify(token, secret)
     const productId = req.params.id
-    if (!userId) return res.sendStatus(404);
+    if (!userId) return res.sendStatus(401);
 
     await connectionDB.query(
       `DELETE FROM cart 

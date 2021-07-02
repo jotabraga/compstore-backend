@@ -9,6 +9,7 @@ import getCart from "../controllers/getCart.js";
 import createCart from "../controllers/createCart.js";
 import editCart from "../controllers/editCart.js";
 import deleteCart from "../controllers/deleteCart.js";
+import Checkout from "../controllers/checkout.js";
 
 const routes = express.Router();
 
@@ -30,6 +31,9 @@ routes.post("/edit-cart", (req, res) => editCart(req, res));
 
 routes.delete("/cart/:id", (req, res) => deleteCart(req, res));
 
+routes.post("/transactions", (req, res) => Checkout(req, res));
+
 routes.use((_, res) => res.send("404: Page not found"));
+
 
 export default routes;

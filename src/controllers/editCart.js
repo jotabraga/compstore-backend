@@ -4,12 +4,14 @@ import { connectionDB } from "../config/database.js";
 import errorHandler from "./errorHandler.js";
 
 export default async function editCart(req, res) {
+  
   try {
+    
     const token = req.headers["authorization"]?.replace("Bearer ", "");
     const secret = process.env.JWT_SECRET;
     const {userId} = jwt.verify(token, secret)
-    console.log(userId);
-    if (!userId) return res.sendStatus(404);
+  
+    if (!userId) return res.sendStatus(401);
     
     const { newAmount, productId } = req.body;
 
@@ -19,7 +21,7 @@ export default async function editCart(req, res) {
       [newAmount, productId, userId]
     );
 
-    res.sendStatus(201);
+    res.sendStatus(200);
   } catch (e) {
     errorHandler(e, res);
   }
