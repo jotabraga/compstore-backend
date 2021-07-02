@@ -22,7 +22,7 @@ routes.get("/cart", (req, res) => getCart(req, res));
 
 routes.post("/edit-cart", (req, res) => editCart(req, res));
 
-routes.delete("/cart", (req, res) => deleteCart(req, res));
+routes.delete("/cart/:id", (req, res) => deleteCart(req, res));
 
 routes.use((_, res) => res.send("404: Page not found"));
 

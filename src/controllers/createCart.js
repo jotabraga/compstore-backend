@@ -3,8 +3,9 @@ import errorHandler from "./errorHandler.js";
 
 export default async function createCart(req, res) {
   try {
-
-    const { token, id } = req.body;
+    const authorization = req.headers.authorization;
+    const token = authorization?.replace('Bearer ', "");
+    const {id, amount } = req.body;
 
     if (!token) return res.sendStatus(409);
 
@@ -18,11 +19,12 @@ export default async function createCart(req, res) {
 
     const product = result.rows[0];
     const { description, image, price, categoryId } = product;
+    
 
     await connectionDB.query(
-      `INSERT INTO cart (description,image,price,categoryId, token) 
-      VALUES ($1,$2,$3,$4)`,
-      [description, image, price, categoryId, token]
+      `INSERT INTO cart ("productId",description,image,price,"categoryId", token, amount) 
+      VALUES ($1,$2,$3,$4,$5,$6,$7)`,
+      [id, description, image, price, categoryId, token, amount ]
     );
     res.sendStatus(201);
   } catch (e) {

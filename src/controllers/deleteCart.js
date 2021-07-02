@@ -2,9 +2,12 @@ import { connectionDB } from "../config/database.js";
 import errorHandler from "./errorHandler.js";
 
 export default async function deleteCart(req, res) {
+  const authorization = req.headers.authorization;
+  const token = authorization?.replace('Bearer ', "");
+  const productId = req.params.id
   try {
 
-    const { productId, token } = req.body;
+    
 
     if(!token) return res.sendStatus(409);
 

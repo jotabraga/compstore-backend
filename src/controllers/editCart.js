@@ -6,6 +6,7 @@ export default async function editCart(req, res) {
 
     const { newAmount, token, productId } = req.body;
 
+
     if(!token) return res.sendStatus(409);
 
     const result = await connectionDB.query(
