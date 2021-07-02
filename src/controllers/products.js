@@ -12,7 +12,7 @@ export default async function products(req, res) {
     } else
       result = await connectionDB.query(`SELECT * FROM products`);
 
-    res.send(result.rows);
+    res.status(200).send(result.rows);
   } catch (e) {
     errorHandler(e, res);
   }
